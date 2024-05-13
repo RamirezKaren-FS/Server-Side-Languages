@@ -14,9 +14,12 @@ const divide = (a,b) =>{
 const square = () => {
     return Math.sqrt(25)
 }
+const max = () =>{
+    
+    return Math.max(1,3,54)
+}
 
 
 
-
-module.exports = {multiply, addition, subtract, divide, square}
+module.exports = {multiply, addition, subtract, divide, square, max}
 

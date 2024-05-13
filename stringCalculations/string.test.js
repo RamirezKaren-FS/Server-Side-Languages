@@ -1,4 +1,5 @@
-const {multiply, addition, subtract, divide, square} = require("./string")
+
+const {multiply, addition, subtract, divide, square, max} = require("./string")
 
 
 
@@ -26,8 +27,13 @@ describe("Testing for stringCalculations", ()=>{
     })
     test("Tests the squareroot problem", ()=>{
 
-        expect(square).toBe(5)
+        expect(square(25)).toBe(5)
 
     })
 
+    test("Tests the squareroot problem", ()=>{
+
+        expect(max(1,3,54)).toBe(54)
+
+    })
 });
