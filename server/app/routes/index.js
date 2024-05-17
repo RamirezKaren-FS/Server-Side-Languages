@@ -1,11 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const authorRoutes = require("./authorRoutes")
+const filmmakerRoutes = require("./filmmakerRoutes")
 
 router.get("/", (req,res) => {
     res.status(200).json({success: true});
 });
 
-router.use("/authors", authorRoutes);
+router.use("/filmmakers", filmmakerRoutes);
 
 module.exports = router;
