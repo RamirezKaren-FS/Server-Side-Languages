@@ -1,5 +1,6 @@
 # Module 2
 
+configured the second module with working error codes. could not figure out why the first route was not working but when no information was prompted for the adding of a movie the correct errors showed. 
 
 Will start work on making my second model and adding the information for the second model on video through postman. 
 
