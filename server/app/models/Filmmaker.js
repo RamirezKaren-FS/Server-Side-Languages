@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const filmmakerSchema = new.mongoose.Schema({
+const filmmakerSchema = new mongoose.Schema({
     name: {
     type:String,
     required: [true, "Please enter filmmakers name."],
