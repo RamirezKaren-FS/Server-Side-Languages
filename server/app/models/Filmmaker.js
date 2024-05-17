@@ -24,6 +24,6 @@ const filmmakerSchema = new mongoose.Schema({
         maxlength: [50, "Genre can be no longer than 50 characters."],
         trim: true,
         }
-})
+});
 
-module.exports = mongoose.model("Filmaker", filmmakerSchema);
+module.exports = mongoose.model("Filmmaker", filmmakerSchema);

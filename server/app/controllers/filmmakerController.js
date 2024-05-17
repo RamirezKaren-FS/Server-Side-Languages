@@ -1,7 +1,8 @@
-const Filmaker = require("../models/filmmaker")
+const filmmaker = require("../models/filmmaker");
+const Filmmaker = require("../models/filmmaker")
 
 exports.getAllFilmmakers = async (req,res) => {
-    const filmmakers = await Filmaker.find({})
+    const filmmakers = await Filmmaker.find({})
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker quest`,
@@ -12,7 +13,7 @@ exports.getAllFilmmakers = async (req,res) => {
 exports.getFilmmaker = async (req,res) => {
     try {
         const {id} = req.params;
-        const filmmaker = await Filmaker.findById(id)
+        const filmmaker = await Filmmaker.findById(id)
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker by id quest`,
@@ -25,40 +26,49 @@ exports.getFilmmaker = async (req,res) => {
             message: error,
         });
     }
-    
 };
 
 exports.postFilmmaker = async (req,res) => {
     try {
-        const filmmaker= await Filmaker.create(req.body)
+        const filmmaker= await Filmmaker.create(req.body)
     console.log("saved >>>", filmmaker);
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker quest`
     });
-    } catch (error) {
-        console.log(">>>", error)
+    } 
+    catch (error) {
         res.status(400).json({
-            success: false,
-            message: error,
-        });
-    }
+        success: false,
+        message: error,
+        });  
+    };
 };
 
 exports.updateFilmmaker = async (req,res) => {
-    const {id} = req.params;
-    const updateFilmmaker = await Filmaker.findByIdAndUpdate(id, req.body)
+    try {
+        const {id} = req.params;
+    const updateFilmmaker = await Filmmaker.findByIdAndUpdate(id, req.body, {new: true})
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker quest`,
         data: updateFilmmaker,
     });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error,
+        });
+    }
+    
 };
 
 exports.deleteFilmmaker = async (req,res) => {
     const {id} = req.params;
+    const deleteFilmmaker = await Filmmaker.findByIdAndDelete(id)
     res.status(200).json({
         success: true,
-        message: `${req.method} - Filmmaker quest`
+        message: `${req.method} - Filmmaker Deleted`,
+        data: deleteFilmmaker,
     });
 };
