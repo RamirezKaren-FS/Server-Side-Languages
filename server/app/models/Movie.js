@@ -17,10 +17,8 @@ const movieSchema = new mongoose.Schema({
         required: true,
         },
     filmmaker: {
-        type:String,
-        required: [true, "Please enter filmmakers name."],
-        maxlength: [50, "Name can be no longer than 50 characters."],
-        trim: true,
+        type:mongoose.Schema.Types.ObjectId,
+        ref: "Filmmaker"
         }
 })
 

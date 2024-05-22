@@ -23,7 +23,11 @@ const filmmakerSchema = new mongoose.Schema({
         required: [true, "Please enter filmmakers genre."],
         maxlength: [50, "Genre can be no longer than 50 characters."],
         trim: true,
-        }
+        },
+    movies:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Movies"
+    } ]   
 });
 
 module.exports = mongoose.model("Filmmaker", filmmakerSchema);
