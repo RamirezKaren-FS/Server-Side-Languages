@@ -3,8 +3,19 @@ const Filmmaker = require("../models/filmmaker")
 
 // query 
 exports.getAllFilmmakers = async (req,res) => {
-    console.log(">>>", req.query);
-    const filmmakers = await Filmmaker.find(req.query)
+    // console.log(">>>", req.query);
+    // const filmmakers = await Filmmaker.find(req.query)
+
+    let queryString = JSON.stringify(req.query);
+    queryString = queryString.replace(
+        /\b(gt|gte|lt|lte)\b/g,
+        (match) => `$${match}`
+    );
+    console.log(queryString)
+    let query = Movie.find(JSON.parse(queryString));
+    const filmmakers = await query
+
+
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker quest`,

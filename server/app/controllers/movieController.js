@@ -2,16 +2,9 @@ const Movie = require("../models/movie")
 const Filmmaker = require("../models/filmmaker")
 
 exports.getAllMovies = async (req,res) => {
-    // const movies = await Movie.find({})
+    const movies = await Movie.find({})
 
-    let queryString = JSON.stringify(req.query);
-queryString = queryString.replace(
-    /\b(gt|gte|lt|lte)\b/g,
-    (match) => `$${match}`
-);
-console.log(queryString)
-let query = Movie.find(JSON.parse(queryString));
-const movies = await query
+   
 
     res.status(200).json({
         success: true,
