@@ -1,8 +1,10 @@
 const filmmaker = require("../models/filmmaker");
 const Filmmaker = require("../models/filmmaker")
 
+// query 
 exports.getAllFilmmakers = async (req,res) => {
-    const filmmakers = await Filmmaker.find({})
+    console.log(">>>", req.query);
+    const filmmakers = await Filmmaker.find(req.query)
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker quest`,
