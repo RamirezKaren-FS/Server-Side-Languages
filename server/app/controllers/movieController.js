@@ -3,21 +3,37 @@ const Filmmaker = require("../models/filmmaker")
 
 exports.getAllMovies = async (req,res) => {
 
+// let queryString= JSON.stringify(req.query)
 
+// queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g,(match) => `$${match}`);
 
-let queryString= JSON.stringify(req.query)
+// console.log(">>>", JSON.parse(queryString));
 
-queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g,(match) => `$${match}`);
+// const movies = await Movie.find(JSON.parse(queryString))
 
-console.log(">>>", JSON.parse(queryString));
+//     res.status(200).json({
+//         success: true,
+//         message: `${req.method} - Movie quest`,
+//         data: movies,
+//     });
 
-const movies = await Movie.find(JSON.parse(queryString))
-
-    res.status(200).json({
-        success: true,
-        message: `${req.method} - Movie quest`,
-        data: movies,
-    });
+    try {
+        let queryString= JSON.stringify(req.query)
+        queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g,(match) => `$${match}`);
+        console.log(">>>", JSON.parse(queryString));
+        const movies = await Movie.find(JSON.parse(queryString))
+        res.status(200).json({
+            success: true,
+            message: `${req.method} - Movie quest`,
+            data: movies,
+        });
+    } catch (error) {
+        console.log(">>>", error)
+        res.status(400).json({
+            success: false,
+            message: error,
+        });
+    };
 };
 
 exports.getMovie = async (req,res) => {
@@ -35,33 +51,30 @@ exports.getMovie = async (req,res) => {
             success: false,
             message: error,
         });
-    }
+    };
 };
 
 exports.postMovie = async (req,res) => {
     try {
     //     const postMovie= await Movie.create(req.body)
     // console.log("saved >>>", postMovie);
-    const {movie} = req.body;
-
-    const user = await Filmmaker.findById(movie.filmmaker);
-    movie.filmmaker = user;
-
-    const movieData = new Movie(movie);
-    user.movies.push(movieData._id)
-    const queries = [movieData.save(), filmer.save()]
-    await Promise.all(queries);
-
-    res.status(200).json({
-        success: true,
-        message: `${req.method} - Movie created`,
-        data: movieData,
-    });
+        const {movie} = req.body;
+        const filmer = await Filmmaker.findById(movie.filmmaker);
+        movie.filmmaker = filmer;
+        const movieData = new Movie(movie);
+        filmer.movies.push(movieData._id)
+        const queries = [movieData.save(), filmer.save()]
+        await Promise.all(queries);
+        res.status(200).json({
+            success: true,
+            message: `${req.method} - Movie created`,
+            data: movieData,
+        });
     } 
     catch (error) {
         res.status(400).json({
-        success: false,
-        message: error,
+            success: false,
+            message: error,
         });  
     };
 };
@@ -69,27 +82,44 @@ exports.postMovie = async (req,res) => {
 exports.updateMovie = async (req,res) => {
     try {
         const {id} = req.params;
-    const updateMovie = await Movie.findByIdAndUpdate(id, req.body, {new: true})
-    res.status(200).json({
-        success: true,
-        message: `${req.method} - Movie updated quest`,
-        data: updateMovie,
-    });
+        const updateMovie = await Movie.findByIdAndUpdate(id, req.body, {new: true})
+        res.status(200).json({
+            success: true,
+            message: `${req.method} - Movie updated quest`,
+            data: updateMovie,
+        });
     } catch (error) {
         res.status(400).json({
             success: false,
             message: error,
         });
-    }
+    };
     
 };
 
 exports.deleteMovie = async (req,res) => {
-    const {id} = req.params;
+    // const {id} = req.params;
+    // const deleteMovie = await Movie.findByIdAndDelete(id)
+    // res.status(200).json({
+    //     success: true,
+    //     message: `${req.method} - Movie Deleted`,
+    //     data: deleteMovie,
+    // });
+
+    try {
+        const {id} = req.params;
     const deleteMovie = await Movie.findByIdAndDelete(id)
     res.status(200).json({
         success: true,
         message: `${req.method} - Movie Deleted`,
         data: deleteMovie,
     });
+    } catch (error) {
+        console.log(">>>", error)
+        res.status(400).json({
+            success: false,
+            message: error,
+        });
+    };
+    
 };
