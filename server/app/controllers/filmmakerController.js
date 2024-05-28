@@ -23,13 +23,15 @@ exports.getAllFilmmakers = async (req,res) => {
         filmmakers = Filmmaker.find({}).sort(filmers);
     }
 
-
+    filmmakers =  Filmmaker.find({}) 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 2;
     const skip = (page-1) * limit;
 
+    filmmakers.skip(skip).limit(limit);
 
     const film = await filmmakers 
+
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker by id quest`,

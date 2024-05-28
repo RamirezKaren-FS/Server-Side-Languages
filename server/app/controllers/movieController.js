@@ -24,7 +24,7 @@ exports.getAllMovies = async (req,res) => {
             moviie = Movie.find({}).sort(movies);
         }
 
-        moviie = await Movie.find({})
+        moviie =  Movie.find({})
 
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 2;
