@@ -56,8 +56,6 @@ exports.getMovie = async (req,res) => {
 
 exports.postMovie = async (req,res) => {
     try {
-    //     const postMovie= await Movie.create(req.body)
-    // console.log("saved >>>", postMovie);
         const {movie} = req.body;
         const filmer = await Filmmaker.findById(movie.filmmaker);
         movie.filmmaker = filmer;
@@ -65,6 +63,7 @@ exports.postMovie = async (req,res) => {
         filmer.movies.push(movieData._id)
         const queries = [movieData.save(), filmer.save()]
         await Promise.all(queries);
+        
         res.status(200).json({
             success: true,
             message: `${req.method} - Movie created`,
