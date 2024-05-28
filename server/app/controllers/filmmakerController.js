@@ -3,12 +3,30 @@ const Filmmaker = require("../models/filmmaker")
 
 // query 
 exports.getAllFilmmakers = async (req,res) => {
-    const filmmakers = await Filmmaker.find({}).populate("movies")
+    try {
+        let filmmakers = await Filmmaker.find({})
+        if(req.query.movies){
+            filmmakers = await Filmmaker.find({}).populate("movies") 
+        }
+    
+    if(req.query.select){
+        console.log("before>> ", req.query.select);
+        const filmers = req.query.select.split(",").join("  ");
+        console.log("after >>", filmers);
+        filmmakers = Filmmaker.find({}).select(filmers);
+    }
+    const film = await filmmakers 
     res.status(200).json({
         success: true,
-        message: `${req.method} - Filmmaker quest`,
-        data: filmmakers,
+        message: `${req.method} - Filmmaker by id quest`,
+        data: film,
     });
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            message: error,
+        });
+    }
 };
 
 exports.getFilmmaker = async (req,res) => {
