@@ -3,7 +3,6 @@ const Filmmaker = require("../models/filmmaker")
 
 // query 
 exports.getAllFilmmakers = async (req,res) => {
-    console.log(">>>", req.query);
     const filmmakers = await Filmmaker.find(req.query)
     res.status(200).json({
         success: true,
@@ -22,7 +21,6 @@ exports.getFilmmaker = async (req,res) => {
         data: filmmaker,
     });
     } catch (error) {
-        console.log(">>>", error)
         res.status(400).json({
             success: false,
             message: error,
@@ -33,10 +31,10 @@ exports.getFilmmaker = async (req,res) => {
 exports.postFilmmaker = async (req,res) => {
     try {
         const filmmaker= await Filmmaker.create(req.body)
-    console.log("saved >>>", filmmaker);
     res.status(200).json({
         success: true,
-        message: `${req.method} - Filmmaker quest`
+        message: `${req.method} - Filmmaker quest`,
+        data:filmmaker
     });
     } 
     catch (error) {
