@@ -5,6 +5,7 @@ const Filmmaker = require("../models/filmmaker")
 exports.getAllFilmmakers = async (req,res) => {
     try {
         let filmmakers = await Filmmaker.find({})
+
         if(req.query.movies){
             filmmakers = await Filmmaker.find({}).populate("movies") 
         }
@@ -14,6 +15,12 @@ exports.getAllFilmmakers = async (req,res) => {
         const filmers = req.query.select.split(",").join("  ");
         console.log("after >>", filmers);
         filmmakers = Filmmaker.find({}).select(filmers);
+    }
+    if(req.query.sort){
+        console.log("before>> ", req.query.sort);
+        const filmers = req.query.sort.split(",").join("  ");
+        console.log("after >>", filmers);
+        filmmakers = Filmmaker.find({}).sort(filmers);
     }
     const film = await filmmakers 
     res.status(200).json({

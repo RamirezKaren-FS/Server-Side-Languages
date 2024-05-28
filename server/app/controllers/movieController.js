@@ -3,14 +3,32 @@ const Filmmaker = require("../models/filmmaker")
 
 exports.getAllMovies = async (req,res) => {
     try {
+        let moviie = await Movie.find({})
+
         let queryString= JSON.stringify(req.query)
         queryString = queryString.replace(/\b(gt|gte|lt|lte)\b/g,(match) => `$${match}`);
         console.log(">>>", JSON.parse(queryString));
         const movies = await Movie.find(JSON.parse(queryString))
+
+        if(req.query.select){
+            console.log("before>> ", req.query.select);
+            const movies = req.query.select.split(",").join("  ");
+            console.log("after >>", movies);
+            moviie = Movie.find({}).select(movies);
+        }
+        if(req.query.sort){
+            console.log("before>> ", req.query.sort);
+            const movies = req.query.sort.split(",").join("  ");
+            console.log("after >>", movies);
+            moviie = Movie.find({}).sort(movies);
+        }
+        const moviee = await moviie 
+
+
         res.status(200).json({
             success: true,
             message: `${req.method} - Movie quest`,
-            data: movies,
+            data: moviee,
         });
     } catch (error) {
         console.log(">>>", error)
