@@ -3,7 +3,7 @@ const Filmmaker = require("../models/filmmaker")
 
 // query 
 exports.getAllFilmmakers = async (req,res) => {
-    const filmmakers = await Filmmaker.find(req.query)
+    const filmmakers = await Filmmaker.find({}).populate("movies")
     res.status(200).json({
         success: true,
         message: `${req.method} - Filmmaker quest`,
