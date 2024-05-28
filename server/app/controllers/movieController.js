@@ -1,5 +1,6 @@
 const Movie = require("../models/movie")
-const Filmmaker = require("../models/filmmaker")
+const Filmmaker = require("../models/filmmaker");
+const { query } = require("express");
 
 exports.getAllMovies = async (req,res) => {
     try {
@@ -22,6 +23,15 @@ exports.getAllMovies = async (req,res) => {
             console.log("after >>", movies);
             moviie = Movie.find({}).sort(movies);
         }
+
+        moviie = await Movie.find({})
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 2;
+        const skip = (page-1) * limit;
+
+        moviie.skip(skip).limit(limit);
+
         const moviee = await moviie 
 
 

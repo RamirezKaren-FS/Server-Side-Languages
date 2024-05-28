@@ -22,6 +22,13 @@ exports.getAllFilmmakers = async (req,res) => {
         console.log("after >>", filmers);
         filmmakers = Filmmaker.find({}).sort(filmers);
     }
+
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 2;
+    const skip = (page-1) * limit;
+
+
     const film = await filmmakers 
     res.status(200).json({
         success: true,
