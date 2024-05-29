@@ -23,12 +23,16 @@ exports.getAllFilmmakers = async (req,res) => {
         filmmakers = Filmmaker.find({}).sort(filmers);
     }
 
+    if(req.query.page){
+
     filmmakers =  Filmmaker.find({}) 
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 2;
     const skip = (page-1) * limit;
 
-    filmmakers.skip(skip).limit(limit);
+    filmmakers.skip(skip).limit(limit); 
+    }
+    
 
     const film = await filmmakers 
 
