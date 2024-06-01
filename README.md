@@ -1,5 +1,4 @@
-# Module 3
+# Module 4
 
-Learning about queries and how to use them to pull very specific information from the models 
-
+Connecting everything with react 
  
