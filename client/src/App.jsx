@@ -12,12 +12,16 @@ function App() {
     ...prevData,
     [name]: value,
     }))
+  };
+
+  const handleSumbit = (e) =>{
+    e.preventDefault();
     console.log("state", formData)
   }
 
   return (
     <>
-      <form>
+      <form onSubmit={handleSumbit}>
         <label>
           Name: <input type='text' name='name' onChange={handleInput}/>
         </label>
@@ -30,6 +34,7 @@ function App() {
         <label>
           Genre: <input type='text' name='genre'onChange={handleInput}/>
         </label>
+        <button type='submit'>Submit</button>
       </form>
     </>
   )
