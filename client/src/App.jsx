@@ -3,19 +3,22 @@ import './App.css'
 import API from './API'
 
 function App() {
-  const [formData, setFormData] = useState({})
-  const [movies, setMovies]= useState([])
+  const [formData, setFormData] = useState({});
+  const [movies, setMovies]= useState([]);
 
   useEffect(() =>{
     const fetchData = async () =>{
-try {
-  const response = await API.fetchMovies()
-  console.log("response", response)
-} catch (error) {
+    try {
+      const response = await API.fetchMovies();
+      console.log("response", response);
+      setMovies(response.data);
+    }     
+    catch (error) {
   
-}
     }
-  });
+    fetchData();
+    }
+  }, []);
 
   const handleInput = (e) =>{
     const { name,value }= e.target;
@@ -29,10 +32,10 @@ try {
 
   const handleSumbit = async (e) =>{
     e.preventDefault();
-    console.log("State", formData)
-    const response = await API.createMovie(formData)
-    console.log(response.data)
-    setMovies([...movies, response.data])
+    console.log("State", formData);
+    const response = await API.createMovie(formData);
+    console.log(response.data);
+    setMovies([...movies, response.data]);
   }
 
   return (
