@@ -72,18 +72,20 @@ exports.getMovie = async (req,res) => {
 
 exports.postMovie = async (req,res) => {
     try {
-        const {movie} = req.body;
-        const filmer = await Filmmaker.findById(movie.filmmaker);
-        movie.filmmaker = filmer;
-        const movieData = new Movie(movie);
-        filmer.movies.push(movieData._id)
-        const queries = [movieData.save(), filmer.save()]
-        await Promise.all(queries);
+        // const {movie} = req.body;
+        // const filmer = await Filmmaker.findById(movie.filmmaker);
+        // movie.filmmaker = filmer;
+        // const movieData = new Movie(movie);
+        // filmer.movies.push(movieData._id)
+        // const queries = [movieData.save(), filmer.save()]
+        // await Promise.all(queries);
         
+        const {movie} = req.body;
+        const newMovie = await Movie.create(movie)
         res.status(200).json({
             success: true,
             message: `${req.method} - Movie created`,
-            data: movieData,
+            data: newMovie,
         });
     } 
     catch (error) {

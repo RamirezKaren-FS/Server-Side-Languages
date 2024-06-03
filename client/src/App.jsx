@@ -1,22 +1,38 @@
-import { useState } from 'react'
-
+import { useEffect, useState } from 'react'
 import './App.css'
+import API from './API'
 
 function App() {
   const [formData, setFormData] = useState({})
+  const [movies, setMovies]= useState([])
+
+  useEffect(() =>{
+    const fetchData = async () =>{
+try {
+  const response = await API.fetchMovies()
+  console.log("response", response)
+} catch (error) {
+  
+}
+    }
+  });
+
   const handleInput = (e) =>{
-    const {name,value} =e.target;
-    console.log('name', name)
-    console.log('value', value)
-    setFormData((prevData) =>({
-    ...prevData,
+    const { name,value }= e.target;
+    console.log('name', name);
+    console.log('value', value);
+    setFormData((data) =>({
+    ...data,
     [name]: value,
     }))
   };
 
-  const handleSumbit = (e) =>{
+  const handleSumbit = async (e) =>{
     e.preventDefault();
-    console.log("state", formData)
+    console.log("State", formData)
+    const response = await API.createMovie(formData)
+    console.log(response.data)
+    setMovies([...movies, response.data])
   }
 
   return (
@@ -26,18 +42,29 @@ function App() {
           Name: <input type='text' name='name' onChange={handleInput}/>
         </label>
         <label>
-          BirthYear: <input type='text' name='birthYear'onChange={handleInput}/>
+          Date Released: <input type='text' name='dateReleased'onChange={handleInput}/>
         </label> 
         <label>
-          Birthplace: <input type='text' name='birthplace'onChange={handleInput}/>
-        </label>
-        <label>
-          Genre: <input type='text' name='genre'onChange={handleInput}/>
+          Duration: <input type='text' name='duration'onChange={handleInput}/>
         </label>
         <button type='submit'>Submit</button>
       </form>
+      <div>
+        <h3>Movie List</h3>
+          <ul>
+            {movies.map((movie) =>(
+              <li key={movie._id}>
+                <h4>{movie.name}</h4>
+                <p>{movie.dateReleased}</p>
+                <p>{movie.duration}</p>
+              </li>
+            ))}
+            
+          </ul>
+        
+      </div>
     </>
   )
 }
 
-export default App
+export default App;
